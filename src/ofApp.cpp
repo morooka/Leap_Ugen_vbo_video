@@ -6,12 +6,14 @@ const int ofApp::NUM_PARTICLES;
 
 //--------------------------------------------------------------
 void ofApp::setup(){
-    ofSetDataPathRoot(getResourcesPath() + "/Contents/Resources/");
+    
     controller.setPolicyFlags(Controller::POLICY_BACKGROUND_FRAMES );
     
     ofBackground(0, 0, 0);
     ofEnableDepthTest();
     ofEnableBlendMode(OF_BLENDMODE_ADD);
+    
+    myVideo.setDeviceID(1);
     myVideo.initGrabber(640,480);
     
     bFixedPosition = false;
@@ -30,9 +32,9 @@ void ofApp::update(){
         unsigned char * pixels = myVideo.getPixels();
         for (int i = 0; i < WIDTH; i++) {
             for (int j = 0; j < HEIGHT; j++) {
-                float r = (float)pixels[j * myVideo.width * 3 + i * 3] /256.0;
-                float g = (float)pixels[j * myVideo.width * 3 + i * 3 + 1] /256.0;
-                float b = (float)pixels[j * myVideo.width * 3 + i * 3 + 2] /256.0;
+                float r = (float)pixels[(int)(j * myVideo.getWidth() * 3 + i * 3)] /256.0;
+                float g = (float)pixels[(int)(j * myVideo.getWidth() * 3 + i * 3 + 1)] /256.0;
+                float b = (float)pixels[(int)(j * myVideo.getWidth() * 3 + i * 3 + 2)] /256.0;
                 
                 float brightness = (r + g + b) / 3.0f ;
         
@@ -164,6 +166,10 @@ void ofApp::rotateSinewaveDraw(){
     }
     rotateSinewaves.back()->play();
     
+}
+//--------------------------------------------------------------
+void ofApp::exit(){
+    s().close();
 }
 //--------------------------------------------------------------
 void ofApp::rotateBassDraw(){

@@ -3,7 +3,6 @@
 #include "ofMain.h"
 #include "Leap.h"
 #include "ofxUGen.h"
-#include "GetResoucesPath.h"
 
 #include "Sinewave.h"
 #include "rotateSinewave.h"
@@ -35,15 +34,15 @@ class ofApp : public ofBaseApp{
 		void dragEvent(ofDragInfo dragInfo);
 		void gotMessage(ofMessage msg);
     
+    void exit();
+    
     // Leap Motionのコントローラー
     Leap::Controller controller;
     Leap::Finger finger;
     Leap::Hand hand,hand2;
      
     ofEasyCam cam;
-    // 球体の描画処理
-    void drawSphere(Leap::Vector vector, float radius);
-    
+
     static const int WIDTH = 640;
     static const int HEIGHT = 480;
     static const int NUM_PARTICLES = WIDTH * HEIGHT;
@@ -73,8 +72,6 @@ class ofApp : public ofBaseApp{
     deque <bass*>           basses;
     deque <dust*>           dusts;
    
-   
-    
     void rotateSinewaveDraw();
     void rotateBassDraw();
     void whiteNoiseDraw();
